@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Wind chill factor</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<!--	<link rel="stylesheet" href="jquery/jquery.mobile-1.1.0.min.css" />-->
+        <link rel="stylesheet" href="stylesheets/windchill.css" />
+</head>
+<body> 
+
+<div id="page" data-role="page">
+
+	<div id="header" data-role="header">
+		<h1>Wind chill factor</h1>
+	</div>
+
+    <div data-role="content">	
+
+        <div id="temperatureBox">
+            <div id="effective"><span id="effective_temp">-5</span>&deg;<br /><span id="effective_label">effective</span></div>
+            <div id="weather"><span id="weather_icon">icon</span></div>
+            <div id="below">
+            <div id="temperature"><span class="label">Temp:</span><br /><span id="temperature_value">-7</span></div>
+            <div id="windspeed"><span class="label">Wind speed:</span><br /><span id="windspeed_value">10</span></div>
+            </div>
+        </div>
+
+        <div id="location">
+            <div id="location_text">
+                <p>Your position: <br/>
+		            Latitude: <span id="lat"></span><br/>
+		            Longitude: <span id="long"></span>
+                </p>
+            </div>
+            <div id="basicMap"></div>
+        </div>
+	</div>
+
+</div>
+<script src="openlayers/OpenLayers.js"></script>
+<script src="javascripts/jquery-1.7.1.min.js"></script>
+<!--<script src="jquery/jquery.mobile-1.1.0.min.js"></script>-->
+<script src="javascripts/windchillfactor.js"></script>
+</body>
+</html>

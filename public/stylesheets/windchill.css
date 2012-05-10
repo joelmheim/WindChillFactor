@@ -1,0 +1,101 @@
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif ;
+    background-color: black;
+
+}
+
+#header {
+    background-image: url('/images/cloud_banner.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #dcdcdc;
+    border-radius: 15px;
+    height: 100px;
+    margin: 0 0 15px 0;
+}
+
+#header h1 {
+    padding: 10px 20px 10px 20px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#temperatureBox {
+    background-color: #dcdcdc;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 0 0 15px 0;
+    text-align: center;
+    font-size: 20px;
+    width: 200px;
+    overflow: hidden;
+}
+
+#effective  {
+    font-size: 50px;
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+#effective_label {
+    font-size: 16px;
+    color: gray;
+    float: inherit;
+    padding-left: 20px;
+}
+
+#weather {
+    float: left;
+    width: 50%;
+    display: inline-block;
+}
+
+#below {
+    border-top: thin solid grey;
+    padding-top: 10px;
+    clear: both;
+}
+
+#temperature {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.label {
+    float: left;
+    color: grey;
+    font-size: 16px;
+}
+
+#windspeed {
+    float: left;
+    width: 50%;
+}
+
+#location {
+    background-color: #dcdcdc;
+    border-radius: 15px;
+    padding: 10px 10px 10px 10px;
+    font-size: 20px;
+    max-width: 1024px;
+    overflow: auto;
+}
+
+#location_text {
+    width: 25%;
+    min-width: 200px;
+    float: left;
+}
+
+#basicMap {
+    width: 75%;
+   	min-width: 380px;
+    height: 300px;
+    margin: 10px 10px 10px 10px;
+    float: left;
+}
+
