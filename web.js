@@ -1,12 +1,14 @@
 var express = require('express')
   , routes = require('./routes');
 
-
 var app = express.createServer(express.logger());
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.set('view options', {
+    layout: false
+  });
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
@@ -22,8 +24,8 @@ app.configure('production', function(){
 });
 
 app.get('/', function(req, resp) {
-  resp.redirect('/index.html');
-//  resp.send('Hello World!');
+    //resp.redirect("index.html");
+    resp.render("index", { pageTitle: "Wind Chill Factor" });
 });
 
 var port = process.env.PORT || 3001;

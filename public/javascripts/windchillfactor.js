@@ -35,6 +35,7 @@ function mapInit(lat, long) {
     markers.addMarker(new OpenLayers.Marker(position));
 }
 $(document).ready(function() {
+    console.log("Document ready!!");
     if (!!navigator.geolocation) {
     	navigator.geolocation.getCurrentPosition(locator, handle_error);
     }
