@@ -1,0 +1,117 @@
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif ;
+    background-image: -ms-linear-gradient(top, #000000 0%, #3C3C3C 30%);
+    background-image: -moz-linear-gradient(top, #000000 0%, #3C3C3C 30%);
+    background-image: -o-linear-gradient(top, #000000 0%, #3C3C3C 30%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #000000), color-stop(0.3, #3C3C3C));
+    background-image: -webkit-linear-gradient(top, #000000 0%, #3C3C3C 30%);
+    background-image: linear-gradient(top, #000000 0%, #3C3C3C 30%);
+    text-align: center;
+}
+
+#page {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    text-align: left;
+}
+
+#header {
+    background-image: url('/img/cloud_banner.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #dcdcdc;
+    border-radius: 15px;
+    height: 250px;
+    margin: 0 0 15px 15px;
+}
+
+#header title {
+    float: left;
+    padding: 10px 20px 10px 20px;
+    margin: 15px 15px 15px 15px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#temperatureBox {
+    background-color: #dcdcdc;
+    border-radius: 15px;
+    padding: 10px;
+    float: left;
+    margin: 0 15px 15px 0;
+    text-align: center;
+    font-size: 20px;
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+}
+
+#effective  {
+    font-size: 50px;
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+#effective_label {
+    font-size: 16px;
+    color: gray;
+    float: inherit;
+    padding-left: 20px;
+}
+
+#weather {
+    float: left;
+    width: 50%;
+    display: inline-block;
+}
+
+#below {
+    border-top: thin solid grey;
+    padding-top: 10px;
+    clear: both;
+}
+
+#temperature {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.label {
+    float: left;
+    color: grey;
+    font-size: 16px;
+}
+
+#windspeed {
+    float: left;
+    width: 50%;
+}
+
+#location {
+    background-color: #dcdcdc;
+    border-radius: 15px;
+    padding: 10px 10px 10px 10px;
+    font-size: 20px;
+    max-width: 1024px;
+    overflow: auto;
+}
+
+#location_text {
+    width: 25%;
+    min-width: 200px;
+    float: left;
+}
+
+#basicMap {
+    min-width: 350px;
+    width: 75%;
+    height: 300px;
+    margin: 10px 10px 10px 10px;
+    float: left;
+}
+
