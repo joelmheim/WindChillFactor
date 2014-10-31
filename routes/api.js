@@ -32,7 +32,9 @@ router.get('/', function(req, res) {
           windDirection, 
           humidity, 
           pressure, 
-          cloudiness;
+          cloudiness,
+          fog,
+          dewpointTemperature;
       if (err) {
         res.send(err);
       } else {
@@ -47,6 +49,8 @@ router.get('/', function(req, res) {
           humidity = locationElement.humidity[0].$;
           pressure = locationElement.pressure[0].$;
           cloudiness = locationElement.cloudiness[0].$;
+          fog = locationElement.fog[0].$;
+          dewpointTemperature = locationElement.dewpointTemperature[0].$;
           output['time'] = time.from;
           output['location'] = {
             'altitude': Number(location.altitude),
@@ -79,6 +83,14 @@ router.get('/', function(req, res) {
           output['cloudiness'] = {
             'value': Number(cloudiness.percent),
             'unit': 'percent'
+          };
+          output['fog'] = {
+            'value': Number(fog.percent),
+            'unit': 'percent'
+          };
+          output['dewpointTemperature'] = {
+            'value': Number(dewpointTemperature.value),
+            'unit': dewpointTemperature.unit
           };
         });
         res.send(JSON.stringify(output));
