@@ -9,7 +9,6 @@ router.get('/', function(req, res) {
   console.log("Calling yr.no");
   var lat = req.query.lat;
   var lon = req.query.lon;
-  console.log("Lat og lon", lat, lon);
   var options = {
     hostname: 'api.yr.no',
     port: 80,
