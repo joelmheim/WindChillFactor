@@ -23,13 +23,12 @@ body {
     background-color: #dcdcdc;
     border-radius: 15px;
     height: 250px;
-    margin: 0 0 15px 15px;
+    margin: 0 0 15px 0px;
 }
 
-#header title {
-    float: left;
+#title {
     padding: 10px 20px 10px 20px;
-    margin: 15px 15px 15px 15px;
+    margin: 15px 15px 15px 0px;
 }
 
 a {
@@ -41,7 +40,7 @@ a {
     border-radius: 15px;
     padding: 10px;
     float: left;
-    margin: 0 15px 15px 0;
+    margin: 0 15px 15px 15px;
     text-align: center;
     font-size: 20px;
     width: 200px;
@@ -79,6 +78,10 @@ a {
     float: left;
     width: 50%;
     text-align: center;
+}
+
+.cold {
+    color: red;
 }
 
 .label {

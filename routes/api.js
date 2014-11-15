@@ -4,11 +4,18 @@ var xmldoc = require('xmldoc');
 var router = express.Router();
 var parseString = require('xml2js').parseString;
 
+function effective_temperature(temp, windMps) {
+  var windKph = windMps * 3600 / 1000; 
+  var windPow = Math.pow(windKph, 0.16);
+  return (13.12 + (0.6215 * temp) - (11.37 * windPow) + ((0.3965 * temp) * windPow));
+}
+
 /* GET api listing. */
 router.get('/', function(req, res) {
   console.log("Calling yr.no");
   var lat = req.query.lat;
   var lon = req.query.lon;
+  var pretty = req.query.pretty;
   var options = {
     hostname: 'api.yr.no',
     port: 80,
@@ -50,6 +57,7 @@ router.get('/', function(req, res) {
           cloudiness = locationElement.cloudiness[0].$;
           fog = locationElement.fog[0].$;
           dewpointTemperature = locationElement.dewpointTemperature[0].$;
+          effectiveTemperature = effective_temperature(Number(temperature.value), Number(windSpeed.mps));
           output['time'] = time.from;
           output['location'] = {
             'altitude': Number(location.altitude),
@@ -91,8 +99,16 @@ router.get('/', function(req, res) {
             'value': Number(dewpointTemperature.value),
             'unit': dewpointTemperature.unit
           };
+          output['windchill'] = {
+            'value': Number(effectiveTemperature),
+            'unit': temperature.unit
+          };
         });
-        res.send(JSON.stringify(output));
+        if (pretty="true") {
+          res.send(JSON.stringify(output, undefined, 2))
+        } else {
+          res.send(JSON.stringify(output));
+        }
       }
     });
 

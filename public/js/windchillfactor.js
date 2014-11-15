@@ -3,7 +3,8 @@ function locator(pos) {
   var long = pos.coords.longitude;
   $("#lat").text(lat);
   $("#long").text(long);
-  mapInit(lat, long);	
+  mapInit(lat, long);
+  weather_info(lat, long);
 } 
 
 function handle_error(error) {
@@ -24,7 +25,6 @@ function handle_error(error) {
 }
 
 function mapInit(lat, long) {
-  console.log("Map init", lat, long);
   var map = new OpenLayers.Map("basicMap");
   var mapnik         = new OpenLayers.Layer.OSM();
   var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
@@ -37,6 +37,28 @@ function mapInit(lat, long) {
   map.addLayer(markers);
  
   markers.addMarker(new OpenLayers.Marker(position));
+}
+
+function weather_info(lat, long) {
+  var url = "/api?lat=" + lat + "&lon=" + long;
+  $.get(url, function( data ) {
+    var weather = JSON.parse(data);
+    var effectiveTemp = weather.windchill.value;
+    var temp = weather.temperature.value;
+    $("#effective_temp").html(effectiveTemp.toFixed(1) + "&deg;");
+    if (effectiveTemp < 0) {
+      $("#effective_temp").addClass("cold");
+    } else {
+      $("#effective_temp").removeClass("cold");
+    }
+    $("#temperature_value").html(weather.temperature.value + "&deg;");
+    if (temp < 0) {
+      $("#temperature_value").addClass("cold");
+    } else {
+      $("#temperature_value").removeClass("cold");
+    }
+    $("#windspeed_value").text(weather.windSpeed.value);
+  });
 }
 
 $(document).ready(function() {

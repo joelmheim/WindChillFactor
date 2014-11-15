@@ -4,12 +4,10 @@ block content
   #page(data-role="page")
     #content(data-role="content")
       #header(data-role="header")
-        #title
-          h1 Wind Chill Factor
+        h1#title Wind Chill Factor
         #temperatureBox
           #effective
-            span#effective_temp -5
-            | &deg;
+            span#effective_temp 
             br
             span#effective_label effective
           #weather
@@ -18,11 +16,11 @@ block content
             #temperature
               span.label Temp:
               br
-              span#temperature_value -7
+              span#temperature_value 
             #windspeed
               span.label Wind speed:
               br
-              span#windspeed_value 10
+              span#windspeed_value 
 
       #location
         #location_text
