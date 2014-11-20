@@ -1,4 +1,5 @@
 function locator(pos) {
+  console.log("Locator", pos);
   var lat = pos.coords.latitude;
   var long = pos.coords.longitude;
   $("#lat").text(lat);
@@ -25,6 +26,7 @@ function handle_error(error) {
 }
 
 function mapInit(lat, long) {
+  console.log("Map Init:", lat, long)
   var map = new OpenLayers.Map("basicMap");
   var mapnik         = new OpenLayers.Layer.OSM();
   var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
@@ -40,6 +42,7 @@ function mapInit(lat, long) {
 }
 
 function weather_info(lat, long) {
+  console.log("Weather Info: ", lat, long);
   var url = "/api?lat=" + lat + "&lon=" + long;
   $.get(url, function( data ) {
     var weather = JSON.parse(data);
