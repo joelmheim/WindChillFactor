@@ -45,64 +45,69 @@ router.get('/', function(req, res) {
         res.send(err);
       } else {
         parseString(buffer, function(err, result) {
-          var timeElement = result.weatherdata.product[0].time[0];
-          var locationElement = timeElement.location[0];
-          time = timeElement.$;
-          location = locationElement.$;
-          temperature = locationElement.temperature[0].$;
-          windSpeed = locationElement.windSpeed[0].$;
-          windDirection = locationElement.windDirection[0].$;
-          humidity = locationElement.humidity[0].$;
-          pressure = locationElement.pressure[0].$;
-          cloudiness = locationElement.cloudiness[0].$;
-          fog = locationElement.fog[0].$;
-          dewpointTemperature = locationElement.dewpointTemperature[0].$;
-          effectiveTemperature = effective_temperature(Number(temperature.value), Number(windSpeed.mps));
-          output['time'] = time.from;
-          output['location'] = {
-            'altitude': Number(location.altitude),
-            'latitude': Number(location.latitude),
-            'longitude': Number(location.longitude)
-          };
-          output['temperature'] = {
-            'value':  Number(temperature.value),
-            'unit': temperature.unit
-          };
-          output['windSpeed'] = {
-            'value': Number(windSpeed.mps),
-            'unit': 'mps',
-            'beaufort': Number(windSpeed.beaufort),
-            'name': windSpeed.name
-          };
-          output['windDirection'] = {
-            'value': Number(windDirection.deg),
-            'unit': 'deg',
-            'name': windDirection.name
-          };
-          output['humidity'] = {
-            'value': Number(humidity.value),
-            'unit': humidity.unit
-          };
-          output['pressure'] = {
-            'value': Number(pressure.value),
-            'unit': pressure.unit
-          };
-          output['cloudiness'] = {
-            'value': Number(cloudiness.percent),
-            'unit': 'percent'
-          };
-          output['fog'] = {
-            'value': Number(fog.percent),
-            'unit': 'percent'
-          };
-          output['dewpointTemperature'] = {
-            'value': Number(dewpointTemperature.value),
-            'unit': dewpointTemperature.unit
-          };
-          output['windchill'] = {
-            'value': Number(effectiveTemperature),
-            'unit': temperature.unit
-          };
+          console.log("Parse buffer", buffer, result);
+          if (err) {
+            output['error'] = err;
+          } else {
+            var timeElement = result.weatherdata.product[0].time[0];
+            var locationElement = timeElement.location[0];
+            time = timeElement.$;
+            location = locationElement.$;
+            temperature = locationElement.temperature[0].$;
+            windSpeed = locationElement.windSpeed[0].$;
+            windDirection = locationElement.windDirection[0].$;
+            humidity = locationElement.humidity[0].$;
+            pressure = locationElement.pressure[0].$;
+            cloudiness = locationElement.cloudiness[0].$;
+            fog = locationElement.fog[0].$;
+            dewpointTemperature = locationElement.dewpointTemperature[0].$;
+            effectiveTemperature = effective_temperature(Number(temperature.value), Number(windSpeed.mps));
+            output['time'] = time.from;
+            output['location'] = {
+              'altitude': Number(location.altitude),
+              'latitude': Number(location.latitude),
+              'longitude': Number(location.longitude)
+            };
+            output['temperature'] = {
+              'value':  Number(temperature.value),
+              'unit': temperature.unit
+            };
+            output['windSpeed'] = {
+              'value': Number(windSpeed.mps),
+              'unit': 'mps',
+              'beaufort': Number(windSpeed.beaufort),
+              'name': windSpeed.name
+            };
+            output['windDirection'] = {
+              'value': Number(windDirection.deg),
+              'unit': 'deg',
+              'name': windDirection.name
+            };
+            output['humidity'] = {
+              'value': Number(humidity.value),
+              'unit': humidity.unit
+            };
+            output['pressure'] = {
+              'value': Number(pressure.value),
+              'unit': pressure.unit
+            };
+            output['cloudiness'] = {
+              'value': Number(cloudiness.percent),
+              'unit': 'percent'
+            };
+            output['fog'] = {
+              'value': Number(fog.percent),
+              'unit': 'percent'
+            };
+            output['dewpointTemperature'] = {
+              'value': Number(dewpointTemperature.value),
+              'unit': dewpointTemperature.unit
+            };
+            output['windchill'] = {
+              'value': Number(effectiveTemperature),
+              'unit': temperature.unit
+            };
+          }
         });
         if (pretty="true") {
           res.send(JSON.stringify(output, undefined, 2))
