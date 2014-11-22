@@ -45,11 +45,12 @@ router.get('/', function(req, res) {
         res.send(err);
       } else {
         parseString(buffer, function(err, result) {
-          console.log("Parse buffer", buffer, result);
           if (err) {
             output['error'] = err;
           } else {
             var timeElement = result.weatherdata.product[0].time[0];
+            var imgTimeElement = result.weatherdata.product[0].time[1].location[0];
+            console.log("Icon", imgTimeElement.symbol[0].$);
             var locationElement = timeElement.location[0];
             time = timeElement.$;
             location = locationElement.$;
@@ -103,12 +104,14 @@ router.get('/', function(req, res) {
               'value': Number(dewpointTemperature.value),
               'unit': dewpointTemperature.unit
             };
+            output['weatherIcon'] = imgTimeElement.symbol[0].$;
             output['windchill'] = {
               'value': Number(effectiveTemperature),
               'unit': temperature.unit
             };
           }
         });
+
         if (pretty="true") {
           res.send(JSON.stringify(output, undefined, 2))
         } else {

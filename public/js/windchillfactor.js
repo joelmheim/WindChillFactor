@@ -48,6 +48,8 @@ function weather_info(lat, long) {
     var weather = JSON.parse(data);
     var effectiveTemp = weather.windchill.value;
     var temp = weather.temperature.value;
+    var icon = weather.weatherIcon;
+    var iconUrl = 'http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + icon.number + '&content_type=image/png';
     $("#effective_temp").html(effectiveTemp.toFixed(1) + "&deg;");
     if (effectiveTemp < 0) {
       $("#effective_temp").addClass("cold");
@@ -61,6 +63,8 @@ function weather_info(lat, long) {
       $("#temperature_value").removeClass("cold");
     }
     $("#windspeed_value").text(weather.windSpeed.value);
+    $("#weather_icon").attr('src', iconUrl);
+    $("#weather_icon").attr('alt', icon.id);
   });
 }
 
