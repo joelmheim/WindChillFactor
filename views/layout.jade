@@ -6,7 +6,11 @@ html(lang='en')
     title= title
     block css
       link(rel='stylesheet', href='/css/windchill.css')
-    block js
-      script(src='http://localhost:35729/livereload.js')
+      <!-- bower:css -->
+      <!-- endbower -->
   body
     block content
+    block js
+      script(src='http://localhost:35729/livereload.js')
+      <!-- bower:js -->
+      <!-- endbower -->

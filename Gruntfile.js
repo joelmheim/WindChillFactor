@@ -10,7 +10,9 @@ module.exports = function (grunt) {
 
   var reloadPort = 35729, files;
 
+  grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -50,9 +52,36 @@ module.exports = function (grunt) {
           livereload: reloadPort
         }
       }
+    },
+    wiredep: {
+      task: {
+        src: [
+          'app/views/**/*.html',   // .html support...
+          'app/views/**/*.jade',   // .jade support...
+          'app/styles/main.scss',  // .scss & .sass support...
+          'app/config.yml'         // and .yml & .yaml support out of the box!
+        ],
+        options: {
+          // See wiredep's configuration documentation for the options
+          // you may pass:
+         // https://github.com/taptapship/wiredep#configuration
+        }
+      }
+    },
+    karma: {
+      unit: {
+        configFile: 'config/karma.conf.js',
+      },
+      //continuous integration mode: run tests once in PhantomJS browser.
+      continuous: {
+        configFile: 'config/karma.conf.js',
+        singleRun: true,
+        browsers: ['PhantomJS']
+      },
     }
   });
 
+  
   grunt.config.requires('watch.server.files');
   files = grunt.config('watch.server.files');
   files = grunt.file.expand(files);
