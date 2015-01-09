@@ -5,8 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var api = require('./routes/api');
 
 var app = express();
 
@@ -27,6 +26,8 @@ if (app.get('env') === 'development') {
   app.use(express.static(path.join(__dirname, '../client/.tmp')));
   app.use(express.static(path.join(__dirname, '../client/app')));
   
+  app.use('/api/weather', api);
+
   // Error Handling
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -44,6 +45,8 @@ if (app.get('env') === 'production') {
   // changes it to use the optimized version for production
   app.use(express.static(path.join(__dirname, '/dist')));
   
+  app.use('/api/weather', api);
+
   // production error handler
   // no stacktraces leaked to user
   app.use(function(err, req, res, next) {
