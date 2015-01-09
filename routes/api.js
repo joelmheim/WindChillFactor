@@ -112,16 +112,17 @@ router.get('/', function(req, res) {
           }
         });
 
-        if (pretty="true") {
-          res.send(JSON.stringify(output, undefined, 2))
+        if (pretty==="true") {
+          res.type('json').write(JSON.stringify(output, undefined, 2));
+          res.end();
         } else {
-          res.send(JSON.stringify(output));
+          res.type('json').json(output);
         }
       }
     });
 
     response.on('error', function(err) {
-      res.sen(err);
+      res.status(500).json({'error': err });
     });
   }); 
   console.log('Finished');

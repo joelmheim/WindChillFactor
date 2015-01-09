@@ -45,7 +45,8 @@ function weather_info(lat, long) {
   console.log("Weather Info: ", lat, long);
   var url = "/api?lat=" + lat + "&lon=" + long;
   $.get(url, function( data ) {
-    var weather = JSON.parse(data);
+    console.log("Weather: ", data);
+    var weather = data;
     var effectiveTemp = weather.windchill.value;
     var temp = weather.temperature.value;
     var icon = weather.weatherIcon;
