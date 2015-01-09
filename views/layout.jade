@@ -1,6 +1,16 @@
-!!!
-html
+doctype html
+html(lang='en')
   head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body!= body
+    block css
+      link(rel='stylesheet', href='/css/windchill.css')
+      <!-- bower:css -->
+      <!-- endbower -->
+  body
+    block content
+    block js
+      script(src='http://localhost:35729/livereload.js')
+      <!-- bower:js -->
+      <!-- endbower -->

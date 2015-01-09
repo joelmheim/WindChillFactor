@@ -1,11 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var http = require('http');
 
-
-/* GET home page. */
+/* GET users listing. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'WindChill' });
+  res.send('respond with a resource');
 });
 
 module.exports = router;
