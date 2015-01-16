@@ -9,9 +9,13 @@
  */
 angular.module('clientApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    if (!!navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(WindChill.init, WindChill.handle_error);
+    }
+
+    WindChill.weather_info(function (weather) {
+      $scope.weather = weather;
+    });
+
+    $scope.position = WindChill.position;
   });

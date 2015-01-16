@@ -9,9 +9,9 @@
  */
 angular.module('clientApp')
   .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    if (!!navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(WindChill.init, WindChill.handle_error);
+    }
+
+    $scope.position = WindChill.position;
   });

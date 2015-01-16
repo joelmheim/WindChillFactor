@@ -1,6 +1,7 @@
-node_modules/
-public/components
+client/node_modules/
+server/node_modules/
+client/bower_components
 .sass-cache
 *.log
-public/index.html
 .idea
+server/dist

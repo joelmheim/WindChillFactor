@@ -1,39 +1,24 @@
-<div id="page" data-role="page">
-  <div id="content" data-role="content">
-    <div id="header" data-role="header">
-      <h1 id="title">Wind Chill Factor</h1>
-      <div id="temperatureBox">
-        <div id="effective">
-          <span id="effective_temp"></span>
-          <br>
-          <span id="effective_label">effective</span>
-        </div>
-        <div id="weather">
-          <img id="weather_icon" width="72dpx">
-        </div>
-        <div id="below">
-          <div id="temperature">
-            <span class="label">Temp:</span>
-            <br>
-            <span id="temperature_value"></span>
-          </div>
-          <div id="windspeed">
-            <span class="label">Wind speed:</span>
-            <br>
-            <span id="windspeed_value"></span>
-          </div>
-        </div>
-      </div>
+<div id="windchill" class="jumbotron" data-role="windchill">
+  <div id="temperatureBox">
+    <div id="effective">
+      <span id="effective_temp"></span>
+      <br>
+      <span id="effective_label">effective</span>
     </div>
-    <div id="location">
-      <div id="location_text">
-        <p>Your position:<br>Latitude:
-          <span id="lat"></span>
-          <br>Longitude:
-          <span id="long"></span>
-        </p>
+    <div id="weather">
+      <img id="weather_icon" width="72dpx">
+    </div>
+    <div id="below">
+      <div id="temperature">
+        <span class="label">Temp:</span>
+        <br>
+        <span id="temperature_value"></span>
       </div>
-      <div id="basicMap"></div>
+      <div id="windspeed">
+        <span class="label">Wind speed:</span>
+        <br>
+        <span id="windspeed_value"></span>
+      </div>
     </div>
   </div>
 </div>
