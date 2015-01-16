@@ -1,23 +1,24 @@
 <div id="windchill" class="jumbotron" data-role="windchill">
+  Lat:{{position.lat}} Lon:{{position.long}}
   <div id="temperatureBox">
     <div id="effective">
-      <span id="effective_temp"></span>
+      <span class="{{weather.windchill.value<0?'cold':'warm'}}">{{weather.windchill.value.toFixed(1)}}&deg;</span>
       <br>
       <span id="effective_label">effective</span>
     </div>
     <div id="weather">
-      <img id="weather_icon" width="72dpx">
+      <img src="{{'http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + weather.weatherIcon.number + '&content_type=image/png'}}" width="72dpx">
     </div>
     <div id="below">
       <div id="temperature">
         <span class="label">Temp:</span>
         <br>
-        <span id="temperature_value"></span>
+        <span class="{{weather.temperature.value<0?'cold':'warm'}}">{{weather.temperature.value}}&deg;</span>
       </div>
       <div id="windspeed">
         <span class="label">Wind speed:</span>
         <br>
-        <span id="windspeed_value"></span>
+        <span id="windspeed_value">{{weather.windSpeed.value}} {{weather.windSpeed.unit}}</span>
       </div>
     </div>
   </div>

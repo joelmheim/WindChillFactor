@@ -20,4 +20,8 @@ describe('Controller: MainCtrl', function () {
   it('should attach a position to the scope', function () {
     expect(scope.position).toBeDefined();
   });
+
+  it('should attach a weather object to the scope', function () {
+    expect(scope.weather).toBeDefined();
+  });
 });

@@ -7,6 +7,7 @@ var WindChill = (function () {
   module.init = function (pos) {
     position.lat = pos.coords.latitude;
     position.long = pos.coords.longitude;
+    console.log('init.position: ', position);
   };
 
   module.position = position;
@@ -46,14 +47,15 @@ var WindChill = (function () {
 
   module.weather_info = function (callback) {
     console.log('Weather Info: ', position.lat, position.long);
-    var url = '/api/weather?lat=' + position.lat + '&lon=' + position.long;
+    var url = 'http://localhost:3000/api/weather?lat=' + position.lat + '&lon=' + position.long;
     $.get(url, function(data) {
-      var yr = JSON.parse(data);
-      var weather = {};
-      weather.effectiveTemp = yr.windchill.value;
-      weather.temp = yr.temperature.value;
-      weather.icon = yr.weatherIcon;
-      weather.iconUrl = 'http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + icon.number + '&content_type=image/png';
+      var weather = JSON.parse(data);
+      //var weather = {};
+      //weather.effectiveTemp = yr.windchill.value;
+      //weather.temp = yr.temperature.value;
+      //weather.icon = yr.weatherIcon;
+      console.log('weather', weather);
+      //weather.iconUrl = 'http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + weather.icon.number + '&content_type=image/png';
       //$("#effective_temp").html(effectiveTemp.toFixed(1) + "&deg;");
       //if (effectiveTemp < 0) {
       //  $("#effective_temp").addClass("cold");
