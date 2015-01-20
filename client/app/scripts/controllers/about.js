@@ -31,4 +31,5 @@ angular.module('clientApp')
         //markers.addMarker(new OpenLayers.Marker(position));
       });
     }
+    console.log("Scope: ", $scope);
   });
