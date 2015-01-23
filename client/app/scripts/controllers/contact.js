@@ -9,4 +9,5 @@
  */
 angular.module('clientApp')
   .controller('ContactCtrl', function ($scope) {
+    $scope.test = "test";
   });
