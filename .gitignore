@@ -5,3 +5,4 @@ client/bower_components
 *.log
 .idea
 server/dist
+.c9
