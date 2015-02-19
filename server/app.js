@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var api = require('./routes/api');
+var yr = require('./routes/yr');
+var anywhere = require('./routes/anywhere');
 
 var app = express();
 
@@ -25,8 +26,8 @@ if (app.get('env') === 'development') {
   // This covers serving up the index page
   app.use(express.static(path.join(__dirname, '../client/.tmp')));
   app.use(express.static(path.join(__dirname, '../client/app')));
-  
-  app.use('/api/weather', api);
+
+  app.use('/api/weather/yr', yr);
 
   // Error Handling
   app.use(function(err, req, res, next) {
@@ -44,7 +45,7 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'production') {
   // changes it to use the optimized version for production
   app.use(express.static(path.join(__dirname, '/dist')));
-  
+
   app.use('/api/weather', api);
 
   // production error handler
