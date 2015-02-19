@@ -47,7 +47,7 @@ var WindChill = (function () {
 
   module.weather_info = function (callback) {
     console.log('Weather Info: ', position.lat, position.long);
-    var url = 'http://localhost:3000/api/weather?lat=' + position.lat + '&lon=' + position.long;
+    var url = 'http://localhost:3000/api/weather/yr?lat=' + position.lat + '&lon=' + position.long;
     $.get(url, function(data) {
       var weather = JSON.parse(data);
       //var weather = {};

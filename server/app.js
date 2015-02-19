@@ -28,6 +28,7 @@ if (app.get('env') === 'development') {
   app.use(express.static(path.join(__dirname, '../client/app')));
 
   app.use('/api/weather/yr', yr);
+  app.use('/api/weather/anywhere', anywhere);
 
   // Error Handling
   app.use(function(err, req, res, next) {

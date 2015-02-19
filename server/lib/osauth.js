@@ -37,6 +37,31 @@ var OSAuth = OSAuth || (function() {
             void 0 == t && (t = 64);
             for (var n = "", a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", e = 0; t > e; e++) n += a.charAt(Math.floor(Math.random() * a.length));
             return n
+        },
+        doLogin: function(email, password) {
+            return OSAuth.OSAGetChallenge(email).then(function (resp) {
+                var hash = OSAuth.OSASaltedHash(email, password, resp.challenge);
+                return $.ajax({
+                    type: 'POST',
+                    url: API_URL + '/' + API_VERSION + '/account/authorization/' + encodeURI(email),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    aysnc: true,
+                    cache: false,
+                    data: {"password": hash, "challenge": resp.challenge}
+                });
+            }).then(function (resp) {
+                var deferred = $.Deferred();
+                sessionStorage['skey'] = resp.skey;
+                sessionStorage['user_id'] = resp.user_id;
+                sessionStorage['user'] = JSON.stringify(resp.user);
+                sessionStorage['name'] = resp.user.first_name + " " + resp.user.last_name;
+                deferred.resolve(resp);
+                return deferred;
+            }).fail(function (resp) {
+                console.log(resp);
+            });
         }
+
     }
 })();
