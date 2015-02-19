@@ -20,9 +20,10 @@ router.get('/', function() {
             dataType: "json",
             async: true,
             cache: false,
-            headers: {'Authorization': 'OSA ' + sessionStorage['skey']},
+            headers: {'Authorization': 'OSA ' + sessionStorage.getItem('skey')},
             data: query
         });
-        res.json(result);
+
     });
+    res.json(result);
 });

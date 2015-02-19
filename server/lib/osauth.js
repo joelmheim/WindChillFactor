@@ -1,7 +1,7 @@
 var PBKDF2 = require('crypto-js/pbkdf2');
 var HmacSHA1 = require('crypto-js/hmac-sha1');
-var API_URL = require('anywhere-constants').API_URL;
-var API_VERSION = require('anywhere-constants').API_VERSION;
+var API_URL = require('./anywhere-constants').API_URL;
+var API_VERSION = require('./anywhere-constants').API_VERSION;
 
 var OSAuth = OSAuth || (function() {
     return {
