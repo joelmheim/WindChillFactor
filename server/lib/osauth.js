@@ -68,31 +68,32 @@ var OSAuth = OSAuth || (function() {
             for (var n = "", a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", e = 0; t > e; e++) n += a.charAt(Math.floor(Math.random() * a.length));
             return n;
         },
-        doLogin: function(email, password, callback) {
+        doLogin: function(email, password) {
             var deferred = q.defer();
+            var promise = OSAuth.OSAGetChallenge(email).then(function (resp) {
+                var hash = OSAuth.OSASaltedHash(email, password, resp.challenge);
+                var options = {
+                    hostname: API_HOSTNAME,
+                    port: 80,
+                    path: '/' + API_VERSION + '/account/authorization/' + encodeURI(email),
+                    method: 'POST'
+                };
+                var request = http.request(options, function (response) {
+                    var buffer = "";
 
+                    response.on("data", function (chunk) {
+                        buffer += chunk;
+                    });
 
-            var promise = OSAuth.OSAGetChallenge()
-            var options = {
-                hostname: API_HOSTNAME,
-                port: 80,
-                path: '/' + API_VERSION + '/account/authorization/' + encodeURI(email),
-                method: 'POST'
-            };
-            var request = http.request(options, function (response) {
-                var buffer = "";
-
-                response.on("data", function (chunk) {
-                    buffer += chunk;
+                    response.on("end", function (err) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(buffer);
+                        }
+                    });
                 });
-
-                response.on("end", function (err) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        callback(buffer);
-                    }
-                });
+                return deferred.promise;
             });
             //return OSAuth.OSAGetChallenge(email).then(function (resp) {
             //    var hash = OSAuth.OSASaltedHash(email, password, resp.challenge);
