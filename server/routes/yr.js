@@ -5,7 +5,7 @@ var router = express.Router();
 var parseString = require('xml2js').parseString;
 
 function effective_temperature(temp, windMps) {
-  var windKph = windMps * 3600 / 1000; 
+  var windKph = windMps * 3600 / 1000;
   var windPow = Math.pow(windKph, 0.16);
   return (13.12 + (0.6215 * temp) - (11.37 * windPow) + ((0.3965 * temp) * windPow));
 }
@@ -27,17 +27,17 @@ router.get('/', function(req, res) {
 
     response.on("data", function (chunk) {
       buffer += chunk;
-    }); 
+    });
 
     response.on("end", function (err) {
-      var output = {}, 
-          time, 
-          location, 
-          temperature, 
-          windSpeed, 
-          windDirection, 
-          humidity, 
-          pressure, 
+      var output = {},
+          time,
+          location,
+          temperature,
+          windSpeed,
+          windDirection,
+          humidity,
+          pressure,
           cloudiness,
           fog,
           dewpointTemperature;
@@ -121,9 +121,9 @@ router.get('/', function(req, res) {
     });
 
     response.on('error', function(err) {
-      res.sen(err);
+      res.send(err);
     });
-  }); 
+  });
   console.log('Finished');
 
 });
