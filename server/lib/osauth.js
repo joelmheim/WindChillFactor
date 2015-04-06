@@ -1,3 +1,4 @@
+var querystring = require('querystring');
 var http = require('http');
 var q = require('q');
 var CryptoJS = require('crypto-js');
@@ -21,22 +22,20 @@ var OSAuth = OSAuth || (function() {
                 });
             return e + "$" + CryptoJS.enc.Base64.stringify(r).replace(/\+/g, ".");
         },
-        OSATimedHash: function(n, a) {
-            var e = OSAuth.OSAHash(n, a),
-                r = parseInt(Math.floor((new Date()).getTime() / 6e4)).toString();
-            return CryptoJS.HmacSHA1(r, e).toString();
-        },
         OSASaltedHash: function(n, a, e) {
             var r = OSAuth.OSAHash(n, a);
             return CryptoJS.HmacSHA1(e, r).toString();
         },
-        OSAGetChallenge: function() {
+        OSAGetChallenge: function(email) {
+            console.log('Challenge requested.');
             var deferred = q.defer();
             var options = {
                 hostname: API_HOSTNAME,
-                port: 80,
-                path: '/' + API_VERSION + '/account/challenge/' + encodeURI(CryptoJS),
-                method: 'GET'
+                path: '/' + API_VERSION + '/account/challenge/' + encodeURI(email),
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             };
             var request = http.get(options, function (response) {
                 var buffer = "";
@@ -47,12 +46,23 @@ var OSAuth = OSAuth || (function() {
 
                 response.on("end", function (err) {
                     if (err) {
+                        console.log('Error requesting challenge.', err);
                         deferred.reject(err);
                     } else {
-                        deferred.resolve(buffer);
+                        console.log('Buffer: ', buffer);
+                        var data = JSON.parse(buffer);
+                        console.log('Challenge received.', data);
+                        if (data.status === 200) {
+                            console.log('Success: ', data.status);
+                            deferred.resolve(data);
+                        } else {
+                            console.log('Failure: ', data.status, data.message);
+                            deferred.reject(data);
+                        }
                     }
                 });
             });
+
             return deferred.promise;
             //return $.ajax({
             //    type: "GET",
@@ -63,38 +73,59 @@ var OSAuth = OSAuth || (function() {
             //    cache: false
             //});
         },
-        OSASalt: function() {
-            void 0 == CryptoJS && (CryptoJS = 64);
-            for (var n = "", a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", e = 0; t > e; e++) n += a.charAt(Math.floor(Math.random() * a.length));
-            return n;
-        },
         doLogin: function(email, password) {
             var deferred = q.defer();
-            var promise = OSAuth.OSAGetChallenge(email).then(function (resp) {
+            OSAuth.OSAGetChallenge(email).then(function (resp) {
+                console.log('Login in progress.');
                 var hash = OSAuth.OSASaltedHash(email, password, resp.challenge);
+                var post_data = querystring.stringify({
+                    'password': hash,
+                    'challenge': resp.challenge
+                });
                 var options = {
                     hostname: API_HOSTNAME,
-                    port: 80,
                     path: '/' + API_VERSION + '/account/authorization/' + encodeURI(email),
-                    method: 'POST'
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': post_data.length
+                    }
                 };
                 var request = http.request(options, function (response) {
                     var buffer = "";
-
+                    //response.setEncoding('utf8');
                     response.on("data", function (chunk) {
                         buffer += chunk;
                     });
 
                     response.on("end", function (err) {
                         if (err) {
+                            console.log('Login error.', err);
                             deferred.reject(err);
+                        } else if (buffer === 'undefined' || buffer === '') {
+                            console.log('Login error. No response.');
+                            deferred.reject('No response from server.');
                         } else {
-                            deferred.resolve(buffer);
+                            console.log('Buffer: ', buffer);
+                            var data = JSON.parse(buffer);
+                            console.log('Response received: ', data);
+                            if (data.status === 200) {
+                                console.log('Success: ', data.status);
+                                deferred.resolve(data);
+                            } else {
+                                console.log('Failure: ', data.status, data.message);
+                                deferred.reject(data);
+                            }
                         }
                     });
                 });
-                return deferred.promise;
+                request.write(post_data);
+                request.end();
+            }, function (reason) {
+                console.log('Login failed', reason);
+                deferred.reject(reason);
             });
+            return deferred.promise;
             //return OSAuth.OSAGetChallenge(email).then(function (resp) {
             //    var hash = OSAuth.OSASaltedHash(email, password, resp.challenge);
             //    return $.ajax({
@@ -120,3 +151,5 @@ var OSAuth = OSAuth || (function() {
         }
     };
 })();
+
+module.exports = OSAuth;

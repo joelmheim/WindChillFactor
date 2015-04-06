@@ -7,3 +7,5 @@ var AnywhereConstants = AnywhereConstants || (function () {
         PASSWORD: '<password>'
     };
 })();
+
+module.exports = AnywhereConstants;

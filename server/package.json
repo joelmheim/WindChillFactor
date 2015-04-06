@@ -13,6 +13,7 @@
     "express": "~4.10.6",
     "morgan": "~1.5.1",
     "q": "^1.2.0",
+    "querystring": "^0.2.0",
     "serve-favicon": "~2.2.0",
     "xml2js": "^0.4.4",
     "xmldoc": "^0.1.4"
