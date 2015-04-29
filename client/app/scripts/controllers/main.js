@@ -19,7 +19,7 @@ angular.module('clientApp')
           'lat' : lat,
           'long' : long
         };
-        var url = '/api/weather?lat=' + lat + '&lon=' + long;
+        var url = '/api/weather/yr?lat=' + lat + '&lon=' + long;
         $http.get(url).
           success(function(data, status, headers, config) {
             $scope.weather = data;

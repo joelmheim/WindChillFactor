@@ -115,8 +115,8 @@ var OSAuth = OSAuth || (function() {
                                     console.log('Login error.', err);
                                     deferred.reject(err);
                                 } else if (buffer === 'undefined' || buffer === '') {
-                                    console.log('Login error. No response.');
-                                    deferred.reject('No response from server.');
+                                    console.log('Login error. Empty buffer.');
+                                    deferred.reject('Empty response from server.');
                                 } else {
                                     console.log('Buffer: ', buffer);
                                     var data = JSON.parse(buffer);
