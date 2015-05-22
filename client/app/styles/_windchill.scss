@@ -50,9 +50,8 @@ a {
 }
 
 .weather {
-    float: left;
     width: 50%;
-    display: inline-block;
+    float: right;
 }
 
 .below {
@@ -62,9 +61,24 @@ a {
 }
 
 .temperature {
+    background-color: #dcdcdc;
     float: left;
     width: 50%;
     text-align: center;
+}
+
+.unused-center {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.temperaturevalue {
+    background-color: #dcdcdc;
+    float: right;
+    width: 50%;
 }
 
 .cold {
