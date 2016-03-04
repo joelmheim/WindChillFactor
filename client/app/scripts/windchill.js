@@ -31,18 +31,32 @@ var WindChill = (function () {
 
   module.mapInit = function () {
     console.log('Map Init: ', position.lat, position.long);
-    var map = new OpenLayers.Map('basicMap');
-    var mapnik         = new OpenLayers.Layer.OSM();
-    var fromProjection = new OpenLayers.Projection('EPSG:4326');   // Transform from WGS 1984
-    var toProjection   = new OpenLayers.Projection('EPSG:900913'); // to Spherical Mercator Projection
-    var position       = new OpenLayers.LonLat(position.long, position.lat).transform( fromProjection, toProjection);
-    var zoom           = 15;
-    map.addLayer(mapnik);
-    map.setCenter(position, zoom );
-    var markers = new OpenLayers.Layer.Markers( 'Markers' );
-    map.addLayer(markers);
+    var map = new ol.Map({
+            target: 'map',
+            layers: [
+              new ol.layer.Tile({
+                source: new ol.source.MapQuest({layer: 'sat'})
+              })
+            ],
+            view: new ol.View({
+              center: ol.proj.fromLonLat([position.long, position.lat]),
+              zoom: 15
+            })
+          });
 
-    markers.addMarker(new OpenLayers.Marker(position));
+//          new OpenLayers.Map('map');
+//    var mapnik         = new OpenLayers.Layer.OSM();
+//    var fromProjection = new OpenLayers.Projection('EPSG:4326');   // Transform from WGS 1984
+//    var toProjection   = new OpenLayers.Projection('EPSG:900913'); // to Spherical Mercator Projection
+//    var position       = new OpenLayers.LonLat(position.long, position.lat).transform( fromProjection, toProjection);
+//    var zoom           = 15;
+//    map.addLayer(mapnik);
+//    map.setCenter(position, zoom );
+//    var markers = new OpenLayers.Layer.Markers( 'Markers' );
+//    map.addLayer(markers);
+
+//    markers.addMarker(new OpenLayers.Marker(position));
+    
   };
 
   module.weather_info = function (callback) {

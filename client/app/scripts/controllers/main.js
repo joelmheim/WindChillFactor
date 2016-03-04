@@ -24,6 +24,18 @@ angular.module('clientApp')
           success(function(data, status, headers, config) {
             $scope.weather = data;
           });
+        var map = new ol.Map({
+                    target: 'map',
+                    layers: [
+                      new ol.layer.Tile({
+                        source: new ol.source.MapQuest({layer: 'sat'})
+                      })
+                    ],
+                    view: new ol.View({
+                      center: ol.proj.fromLonLat([long, lat]),
+                      zoom: 15
+                    })
+                  });
       });
     }
   });
