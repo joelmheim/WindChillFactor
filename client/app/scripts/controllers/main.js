@@ -33,7 +33,6 @@ angular.module('clientApp')
     map.locate({setView: true, maxZoom: 16});
 
     function onLocationFound(e) {
-      console.log("Location: ", e);
       // $scope.position = {
       //   'lat' : e.latitude,
       //   'long' : e.longitude
@@ -46,10 +45,8 @@ angular.module('clientApp')
           var radius = e.accuracy / 2;
 
           var weatherPopupText = //$()
-            //"<div class='temperature-box'>" +
             "<div>" +
               "<div class='effective'>"+
-            //    "<span class=\'" + data.windchill.value<0?'cold':'warm' + "\'>" + data.windchill.value.toFixed(1) + "&deg;</span>" +
                 "<span id='effective_value'>" + data.windchill.value.toFixed(1) + "&deg;</span>" +
                 "<br/>" +
                 "<span class='effective-label'>effective</span>" +
@@ -61,7 +58,6 @@ angular.module('clientApp')
                 "<div class='temperature'>" +
                   "<span class='weather-label'>Temp:</span>" +
                   "<br/>" +
-                  //"<span class='" + data.temperature.value<0?'cold':'warm' + "'>" + data.temperature.value + "&deg;</span>" +
                   "<span id='temp_value' class='weather-value'>" + data.temperature.value + "&deg;</span>" +
                 "</div>" +
                 "<div class='windspeed'>" +
@@ -83,8 +79,7 @@ angular.module('clientApp')
                   'closeOnClick': false,
                   'className': 'temperature-box'
                 }
-        console.log(weatherPopupElement);
-
+      
           L.marker(e.latlng).addTo(map)
             .bindPopup(weatherPopupElement[0], customOptions).openPopup();
 //            .bindPopup("Effective temp: " + Math.round(data.windchill.value, 2) + ".<br/>You are within " + radius + " meters from this point").openPopup();
