@@ -340,7 +340,8 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
-            'images/{,*/}*.{webp,ico,jpg,Spng,txt}',
+            'images/{,*/}*.{webp,ico,jpg,png,txt}',
+            '../bower_components/leaflet/dist/images/{,*/}*.{webp,ico,jpg,png,txt}',
             'fonts/{,*/}*.*'
           ]
         }, {
