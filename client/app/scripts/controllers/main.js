@@ -45,31 +45,31 @@ angular.module('clientApp')
           var radius = e.accuracy / 2;
 
           var weatherPopupText = //$()
-            "<div>" +
-              "<div class='effective'>"+
-                "<span id='effective_value'>" + data.windchill.value.toFixed(1) + "&deg;</span>" +
-                "<br/>" +
-                "<span class='effective-label'>effective</span>" +
-              "</div>" +
-              "<div class='weather'>" +
-                "<img src='http://api.yr.no/weatherapi/weathericon/1.1/?symbol=" + data.weatherIcon.number + "&content_type=image/png'>" +
-              "</div>" +
-              "<div class='below'>" +
-                "<div class='temperature'>" +
-                  "<span class='weather-label'>Temp:</span>" +
-                  "<br/>" +
-                  "<span id='temp_value' class='weather-value'>" + data.temperature.value + "&deg;</span>" +
-                "</div>" +
-                "<div class='windspeed'>" +
-                  "<span class='weather-label'>Wind speed:</span>" +
-                  "<br/>" +
-                  "<span class='weather-value'>" + data.windSpeed.value + " " + data.windSpeed.unit + "</span>" +
-                "</div>" +
-                "<div class='accuracy'>" +
-                  "<span>You are within " + radius + " meters from this point.</span>" +
-                "</div>" +
-              "</div>" +
-            "</div>";
+            '<div>' +
+              '<div class="effective">'+
+                '<span id="effective_value">' + data.windchill.value.toFixed(1) + '&deg;</span>' +
+                '<br/>' +
+                '<span class="effective-label">effective</span>' +
+              '</div>' +
+              '<div class="weather">' +
+                '<img src="http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + data.weatherIcon.number + '&content_type=image/png">' +
+              '</div>' +
+              '<div class="below">' +
+                '<div class="temperature">' +
+                  '<span class="weather-label">Temp:</span>' +
+                  '<br/>' +
+                  '<span id="temp_value" class="weather-value">' + data.temperature.value + '&deg;</span>' +
+                '</div>' +
+                '<div class="windspeed">' +
+                  '<span class="weather-label">Wind speed:</span>' +
+                  '<br/>' +
+                  '<span class="weather-value">' + data.windSpeed.value + ' ' + data.windSpeed.unit + '</span>' +
+                '</div>' +
+                '<div class="accuracy">' +
+                  '<span>You are within ' + radius + ' meters of this point.</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
         var weatherPopupElement = $(weatherPopupText);
         var customOptions =
                 {
@@ -79,7 +79,7 @@ angular.module('clientApp')
                   'closeOnClick': false,
                   'className': 'temperature-box'
                 }
-      
+
           L.marker(e.latlng).addTo(map)
             .bindPopup(weatherPopupElement[0], customOptions).openPopup();
 //            .bindPopup("Effective temp: " + Math.round(data.windchill.value, 2) + ".<br/>You are within " + radius + " meters from this point").openPopup();
