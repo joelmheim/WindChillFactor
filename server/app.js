@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var yr = require('./routes/yr');
-var anywhere = require('./routes/anywhere');
+//var anywhere = require('./routes/anywhere');
 
 var app = express();
 
@@ -28,7 +28,7 @@ if (app.get('env') === 'development') {
   app.use(express.static(path.join(__dirname, '../client/app')));
 
   app.use('/api/weather/yr', yr);
-  app.use('/api/weather/anywhere', anywhere);
+  //app.use('/api/weather/anywhere', anywhere);
 
   // Error Handling
   app.use(function(err, req, res, next) {
@@ -48,7 +48,7 @@ if (app.get('env') === 'production') {
     app.use(express.static(path.join(__dirname, '/dist')));
 
     app.use('/api/weather/yr', yr);
-    app.use('/api/weather/anywhere', anywhere);
+    //app.use('/api/weather/anywhere', anywhere);
 
     // production error handler
     // no stacktraces leaked to user
