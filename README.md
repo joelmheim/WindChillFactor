@@ -13,7 +13,9 @@ The project code is split into two parts
 The server part is a pure express web server publishing a rest api with the weather data.
 
 The client is an angular based web app using leaflet that calls the server api. To build new version of the client and distribute to the server directory:
+ ```
  grunt --force
+ ```
  
 Then run the server using:
  * npm test or
@@ -22,7 +24,11 @@ Then run the server using:
 
 ## Deployment to Heroku
 To deploy to Heroku, use the git subtree command like this:
- ```git subtree push --prefix server heroku master```
+ ```
+ git subtree push --prefix server heroku master
+ ```
  
 If --force is needed use
- ```git push heroku `git subtree split --prefix server master`:master --force```
+ ```
+ git push heroku `git subtree split --prefix server master`:master --force
+ ```
