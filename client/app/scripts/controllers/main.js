@@ -66,7 +66,7 @@ angular.module('clientApp')
                   '<span class="weather-value">' + data.windSpeed.value + ' ' + data.windSpeed.unit + '</span>' +
                 '</div>' +
                 '<div class="accuracy">' +
-                  '<span>You are within ' + radius + ' meters of this point.</span>' +
+                  '<span>You are within ' + radius.toFixed(1) + ' meters of this point.</span>' +
                 '</div>' +
               '</div>' +
             '</div>';
