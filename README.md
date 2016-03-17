@@ -22,7 +22,7 @@ Then run the server using:
 
 ## Deployment to Heroku
 To deploy to Heroku, use the git subtree command like this:
- git subtree push --prefix server heroku master
+ ```git subtree push --prefix server heroku master```
  
 If --force is needed use
- git push heroku `git subtree split --prefix server master`:master --force
+ ```git push heroku `git subtree split --prefix server master`:master --force```
