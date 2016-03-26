@@ -155,7 +155,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.tmp/styles/',
           src: '{,*/}*.css',
-          dest: '.tmp/styles/'
+          dest: '<%= yeoman.dist %>/styles/'
         }]
       }
     },
@@ -341,7 +341,9 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp,ico,jpg,png,txt}',
-            'fonts/{,*/}*.*'
+            'fonts/{,*/}*.*',
+            'styles/{,*/}*.css',
+            'scripts/{,*/}*.js'
           ]
         }, {
           expand: true,
