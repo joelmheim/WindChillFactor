@@ -1,1 +1,33 @@
-<script type="javascript">console.log("Scope from html: ", $scope);</script> <div class="row"> <div class="temperature-box col-sm-6"> <div class="effective"> <span class="{{weather.windchill.value<0?'cold':'warm'}}">{{weather.windchill.value.toFixed(1)}}&deg;</span> <br> <span class="effective-label">effective</span> </div> <div class="weather"> <img src="{{'http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + weather.weatherIcon.number + '&content_type=image/png'}}"> </div> <div class="below"> <form name="temperatureAndWind" ng-controller="MainCtrl"> <div class="temperature"> <span class="weather-label">Temp:</span> <br> <span class="{{weather.temperature.value<0?'cold':'warm'}}"> <input class="temperature" type="number" name="temperature" ng-model="weather.temperature.value" required> &deg; </span> </div> <div class="windspeed"> <span class="weather-label">Wind speed:</span> <br> <span>{{weather.windSpeed.value}} {{weather.windSpeed.unit}}</span> </div> </form> </div> </div> </div>
+<script type="javascript">
+  console.log("Scope from html: ", $scope);
+</script>
+
+<div class="row">
+    <div class="temperature-box col-sm-6">
+      <div class="effective">
+        <span class="{{weather.windchill.value<0?'cold':'warm'}}">{{weather.windchill.value.toFixed(1)}}&deg;</span>
+        <br>
+        <span class="effective-label">effective</span>
+      </div>
+      <div class="weather">
+        <img src="{{'http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + weather.weatherIcon.number + '&content_type=image/png'}}">
+      </div>
+      <div class="below">
+        <form name="temperatureAndWind" ng-controller="MainCtrl">
+          <div class="temperature">
+            <span class="weather-label">Temp:</span>
+            <br/>
+            <span class="{{weather.temperature.value<0?'cold':'warm'}}">
+              <input class="temperature" type="number" name="temperature" ng-model="weather.temperature.value" required />
+              &deg;
+            </span>
+          </div>
+          <div class="windspeed">
+            <span class="weather-label">Wind speed:</span>
+            <br/>
+            <span>{{weather.windSpeed.value}} {{weather.windSpeed.unit}}</span>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

@@ -31,69 +31,111 @@ angular.module('clientApp')
     // }).addTo(map);
 
     map.locate({setView: true, maxZoom: 16});
+    var customPopupOptions =
+          {
+            //'maxWidth': '500',
+            'minWidth': '200',
+            'closeButton': false,
+            'className': 'temperature-box'
+          };
+    var popup = L.popup(customPopupOptions);
+    var marker = L.marker();
+    var circle = L.circle();
+
+    function weatherPopup(weatherData) {
+      var weatherPopupText =
+        '<div>' +
+          '<div class="effective">'+
+            '<span id="effective_value">' + weatherData.windchill.value.toFixed(1) + '&deg;</span>' +
+            '<br/>' +
+            '<span class="effective-label">effective</span>' +
+          '</div>' +
+          '<div class="weather">' +
+            '<img src="http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + weatherData.weatherIcon.number + '&content_type=image/png">' +
+          '</div>' +
+          '<div class="below">' +
+            '<div class="temperature">' +
+              '<span class="weather-label">Temp:</span>' +
+              '<br/>' +
+              '<span id="temp_value" class="weather-value">' + weatherData.temperature.value + '&deg;</span>' +
+            '</div>' +
+            '<div class="windspeed">' +
+              '<span class="weather-label">Wind speed:</span>' +
+              '<br/>' +
+              '<span class="weather-value">' + weatherData.windSpeed.value + ' ' + weatherData.windSpeed.unit + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      return weatherPopupText;
+    }
+
+    function makeUrl(latLong) {
+      var url = '/api/weather/yr?lat='  + latLong.lat + '&lon=' + latLong.lng;
+      return url;
+    }
 
     function onLocationFound(e) {
       // $scope.position = {
       //   'lat' : e.latitude,
       //   'long' : e.longitude
       // };
-      var url = '/api/weather/yr?lat=' + e.latitude + '&lon=' + e.longitude;
-      $http.get(url).
+      $http.get(makeUrl(e.latlng)).
         success(function(data, status, headers, config) {
           //$scope.weather = data;
 
+          var weatherPopupElement = $(weatherPopup(data));
           var radius = e.accuracy / 2;
-
-          var weatherPopupText = //$()
-            '<div>' +
-              '<div class="effective">'+
-                '<span id="effective_value">' + data.windchill.value.toFixed(1) + '&deg;</span>' +
-                '<br/>' +
-                '<span class="effective-label">effective</span>' +
-              '</div>' +
-              '<div class="weather">' +
-                '<img src="http://api.yr.no/weatherapi/weathericon/1.1/?symbol=' + data.weatherIcon.number + '&content_type=image/png">' +
-              '</div>' +
-              '<div class="below">' +
-                '<div class="temperature">' +
-                  '<span class="weather-label">Temp:</span>' +
-                  '<br/>' +
-                  '<span id="temp_value" class="weather-value">' + data.temperature.value + '&deg;</span>' +
-                '</div>' +
-                '<div class="windspeed">' +
-                  '<span class="weather-label">Wind speed:</span>' +
-                  '<br/>' +
-                  '<span class="weather-value">' + data.windSpeed.value + ' ' + data.windSpeed.unit + '</span>' +
-                '</div>' +
-                '<div class="accuracy">' +
-                  '<span>You are within ' + radius.toFixed(1) + ' meters of this point.</span>' +
-                '</div>' +
-              '</div>' +
+          var accuracyText =
+            '<div class="accuracy">' +
+              '<span>You are within ' + radius.toFixed(1) + ' meters of this point.</span>' +
             '</div>';
-        var weatherPopupElement = $(weatherPopupText);
-        var customOptions =
-                {
-                  //'maxWidth': '500',
-                  'minWidth': '200',
-                  'closeButton': false,
-                  'closeOnClick': false,
-                  'className': 'temperature-box'
-                }
+          var accuracyElement = $(accuracyText);
+          weatherPopupElement.append(accuracyElement);
+          marker
+            .setLatLng(e.latlng)
+            .addTo(map)
+            .bindPopup(weatherPopupElement[0], customPopupOptions)
+            .openPopup();
 
-          L.marker(e.latlng).addTo(map)
-            .bindPopup(weatherPopupElement[0], customOptions).openPopup();
-//            .bindPopup("Effective temp: " + Math.round(data.windchill.value, 2) + ".<br/>You are within " + radius + " meters from this point").openPopup();
+          circle
+            .setLatLng(e.latlng)
+            .setRadius(radius)
+            .addTo(map);
+      });
+    }
 
-          L.circle(e.latlng, radius).addTo(map);
-        });
-     }
-
-     map.on('locationfound', onLocationFound);
+    map.on('locationfound', onLocationFound);
 
     function onLocationError(e) {
-        alert(e.message);
+      L.marker(e.latlng).addTo(map)
+        .bindPopup('<b>Failed to get location.</b>');
     }
 
     map.on('locationerror', onLocationError);
+
+    function locationSelected(e) {
+      map.removeLayer(marker);
+      map.removeLayer(circle);
+      $http.get(makeUrl(e.latlng)).
+        success(function(data, status, headers, config) {
+          //$scope.weather = data;
+
+          var weatherPopupElement = $(weatherPopup(data));
+          var accuracyText =
+            '<div class="accuracy">' +
+              '<span>You have selected location ' + e.latlng.lat.toFixed(3) + ', ' + e.latlng.lng.toFixed(3) + '</span>' +
+            '</div>';
+          var accuracyElement = $(accuracyText);
+          weatherPopupElement.append(accuracyElement);
+          popup
+            .setLatLng(e.latlng)
+            .setContent(weatherPopupElement[0])
+            .openOn(map);
+
+      });
+
+    }
+
+    map.on('click', locationSelected);
 
   });
