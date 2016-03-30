@@ -101,7 +101,10 @@ angular.module('clientApp')
             .setLatLng(e.latlng)
             .setRadius(radius)
             .addTo(map);
-      });
+        }).
+        error(function(data, status, headers, config) {
+          console.out('Error calling yr api: ', data);
+        });
     }
 
     map.on('locationfound', onLocationFound);
@@ -131,9 +134,9 @@ angular.module('clientApp')
             .setLatLng(e.latlng)
             .setContent(weatherPopupElement[0])
             .openOn(map);
-
-      });
-
+          map.setZoomAround(e.latlng, 16);
+          map.panTo(e.latlng);
+        });
     }
 
     map.on('click', locationSelected);
