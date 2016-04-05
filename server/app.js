@@ -38,6 +38,10 @@ if (app.get('env') === 'development') {
       error: err
     });
   });
+
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/app/index.html'));
+  });
 }
 
 /**
@@ -46,6 +50,10 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'production') {
     // changes it to use the optimized version for production
     app.use(express.static(path.join(__dirname, '/dist')));
+
+    app.get('/*', function(req, res) {
+      res.sendFile(__dirname + '/dist/index.html')
+    });
 
     app.use('/api/weather/yr', yr);
     //app.use('/api/weather/anywhere', anywhere);
