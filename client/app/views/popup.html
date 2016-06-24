@@ -1,0 +1,25 @@
+<div class="temperature-box" ng-controller="WeatherCtrl">
+  <div class="effective">
+    <span id="effective_value">{{weather.windchill.value.toFixed(1)}}&deg;</span>
+    <br/>
+    <span class="effective-label">effective</span>
+  </div>
+  <div class="weather">
+    <img src="http://api.yr.no/weatherapi/weathericon/1.1/?symbol={{weather.weatherIcon.number}}&content_type=image/png">
+  </div>
+  <div class="below">
+    <div class="temperature">
+      <span class="weather-label">Temp:</span>
+      <br/>
+      <span id="temp_value" class="weather-value">{{weather.temperature.value}}&deg;</span>
+    </div>
+    <div class="windspeed">
+      <span class="weather-label">Wind speed:</span>
+      <br/>
+      <span class="weather-value">{{weather.windSpeed.value}} {{weather.windSpeed.unit}}</span>
+    </div>
+  </div>
+  <div class="accuracy">
+    <span>You have selected location {{position.lat.toFixed(3)}}, {{position.lng.toFixed(3)}}</span>
+  </div>
+</div>

@@ -4,12 +4,12 @@
  * @ngdoc overview
  * @name clientApp
  * @description
- * # clientApp
+ * # windchillApp
  *
  * Main module of the application.
  */
 angular
-  .module('clientApp', [
+  .module('windchillApp', [
     'ngAnimate',
     'ngAria',
     'ngCookies',
@@ -17,25 +17,9 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui-leaflet'
   ])
-  .config(function ($routeProvider, $locationProvider) {
-    $routeProvider
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .when('/contact', {
-        templateUrl: 'views/contact.html',
-        controller: 'ContactCtrl'
-      })
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-    $locationProvider
-      .html5Mode(true);
+  .config(function ($locationProvider) {
+    $locationProvider.html5Mode(true);
   });

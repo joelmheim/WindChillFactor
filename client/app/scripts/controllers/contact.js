@@ -7,7 +7,7 @@
  * # ContactCtrl
  * Controller of the clientApp
  */
-angular.module('clientApp')
+angular.module('windchillApp')
   .controller('ContactCtrl', function ($scope) {
     $scope.test = "test";
   });

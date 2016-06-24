@@ -23,11 +23,12 @@ a {
 }
 
 .temperature-box {
-    border-radius: 15px;
+    //border-radius: 15px;
     padding: 10px;
-    float: left;
+    //float: left;
     text-align: center;
     font-size: 14px;
+    min-width: 200px;
 }
 
 .effective  {

@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the clientApp
  */
-angular.module('clientApp')
+angular.module('windchillApp')
   .controller('AboutCtrl', function ($scope) {
     $scope.position = {
       'lat' : 61.2,
