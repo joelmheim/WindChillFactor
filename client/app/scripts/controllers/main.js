@@ -10,6 +10,27 @@
 angular.module('windchillApp')
   .controller('MainCtrl', ['$scope', '$http', 'leafletData', 'WeatherService', function ($scope, $http, leafletData, WeatherService) {
     console.log("DEBUG: MainCtrl init");
+
+    function centerZoomAndAddMarker(position, zoom) {
+      angular.extend($scope, {
+        position: position,
+        center: {
+          lat: position.lat,
+          lng: position.lng,
+          zoom: zoom
+        },
+        markers: {
+          m1: {
+            lat: position.lat,
+            lng: position.lng,
+            focus: true,
+            message: "<div ng-include src=\"'views/popup.html'\"></div>",
+            draggable: false
+          }
+        }
+      });
+    }
+
     leafletData.getMap().then(function(map) {
       map.locate({ setView: true, maxZoom: 12 });
     });
@@ -48,83 +69,35 @@ angular.module('windchillApp')
           }
         }
       },
-      position: position,
       text: 'Initial position ',
-      center: {
-        lat: position.lat,
-        lng: position.lng,
-        zoom: 12
-      },
-      markers: {
-        m1: {
-          lat: position.lat,
-          lng: position.lng,
-          focus: true,
-          message: "<div ng-include src=\"'views/popup.html'\"></div>",
-          draggable: false
-        }
-      },
       events: { }
     });
 
     WeatherService.position = position;
 
-    function onLocationFound(event, args) {
+    centerZoomAndAddMarker(position, 12);
+
+    $scope.$on('leafletDirectiveMap.locationfound', function (event, args) {
       console.log("DEBUG: Location found: ", event, args);
       var e = args.leafletEvent;
       WeatherService.position = e.latlng;
-      angular.extend( $scope, {
-              position: e.latlng,
-              center: {
-                lat: e.latlng.lat,
-                lng: e.latlng.lng,
-                zoom: 15
-              },
-              markers: {
-                m1: {
-                  lat: e.latlng.lat,
-                  lng: e.latlng.lng,
-                  message: "<div ng-include src=\"'views/popup.html'\"></div>",
-                  focus: true,
-                  draggable: false
-                }
-              }
-            });
-    }
+      centerZoomAndAddMarker(e.latlng, 15);
+    });
 
-    $scope.$on('leafletDirectiveMap.locationfound', onLocationFound);
-
-    function onLocationError(e) {
-      console.log("DEBUG: Location error", e);
-      leafletData.getMap().then(function(map) {
+    $scope.$on('leafletDirectiveMap.locationerror', function (event, args) {
+      console.log("DEBUG: Location error", event, args);
+      var e = args.leafletEvent;
+      leafletData.getMap().then(function (map) {
         L.marker(e.latlng).addTo(map)
           .bindPopup('<b>Failed to get location.</b>');
       });
-    }
-
-    $scope.$on('leafletDirectiveMap.locationerror', onLocationError);
+    });
 
     $scope.$on('leafletDirectiveMap.click', function (event, args) {
       console.log("DEBUG: Location selected: ", event, args);
       var e = args.leafletEvent;
       WeatherService.position = e.latlng;
-      angular.extend( $scope, {
-        position: e.latlng,
-        center: {
-          lat: e.latlng.lat,
-          lng: e.latlng.lng,
-          zoom: 16
-        },
-        markers: {
-          m1: {
-            lat: e.latlng.lat,
-            lng: e.latlng.lng,
-            message: "<div ng-include src=\"'views/popup.html'\"></div>",
-            focus: true,
-            draggable: false
-          }
-        }
-      });
+      centerZoomAndAddMarker(e.latlng, 15);
       leafletData.getMarkers().then(function(markers) {
         console.log('DEBUG: Marker: ', markers);
         markers.m1.openPopup();
