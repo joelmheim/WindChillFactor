@@ -32,43 +32,44 @@ angular.module('windchillApp')
     }
 
     leafletData.getMap().then(function(map) {
+      var statkart_cache = new L.TileLayer.WMS("https://opencache.statkart.no/gatekeeper/gk/gk.open", {
+          layers: 'topo2',
+          format: 'image/png',
+          transparent: false,
+          version: "1.0",
+          attribution: "Kartverket"
+      });
+      statkart_cache.addTo(map);
       map.locate({ setView: true, maxZoom: 12 });
     });
     var position = {
           lat: 63.43048590647616,
           lng: 10.395147800445558
     };
+
     angular.extend($scope, {
-      layers: {
-        baselayers: {
-          kartverket: {
-            name: 'matrikkel_bakgrunn',
-            url: 'http://opencache.statkart.no/gatekeeper/gk/gk.open',
-            type: 'image/png',
-            transparent: false,
-            version: '1.0',
-            attribution: 'Kartverket'
-          },
-          osm: {
-            name: 'OpenStreetMap',
-            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            type: 'xyz'
-          }
-        },
-        overlays: {
-          wms: {
-            name: 'OpenCycleMap',
-            type: 'xyz',
-            visible: true,
-            url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-            layerParams: {
-              format: 'image/png',
-              transparent: true,
-              opacity: 0.5
-            }
-          }
-        }
-      },
+      // layers: {
+      //   baselayers: {
+      //     osm: {
+      //       name: 'OpenStreetMap',
+      //       url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      //       type: 'xyz'
+      //     }
+      //   },
+      //   overlays: {
+      //     wms: {
+      //       name: 'OpenCycleMap',
+      //       type: 'xyz',
+      //       visible: true,
+      //       url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+      //       layerParams: {
+      //         format: 'image/png',
+      //         transparent: true,
+      //         opacity: 0.5
+      //       }
+      //     }
+      //   }
+      // },
       text: 'Initial position ',
       events: { }
     });
